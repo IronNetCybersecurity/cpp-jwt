@@ -13,14 +13,17 @@ include_directories (include)
 find_package(OpenSSL REQUIRED)
 include_directories(${OPENSSL_INCLUDE_DIR})
 
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
+option(BUILD_EXAMPLES_AND_TESTS "Build examples and tests" OFF)
+if (BUILD_EXAMPLES_AND_TESTS)
+  find_package(GTest REQUIRED)
+  include_directories(${GTEST_INCLUDE_DIRS})
 
-enable_testing()
+  enable_testing()
 
-# Recurse into the "Hello" and "Demo" subdirectories. This does not actually
-# cause another cmake executable to run. The same process will walk through
-# the project's entire directory structure.
-add_subdirectory (tests)
+  # Recurse into the "Hello" and "Demo" subdirectories. This does not actually
+  # cause another cmake executable to run. The same process will walk through
+  # the project's entire directory structure.
+  add_subdirectory (tests)
 
-add_subdirectory (examples)
+  add_subdirectory (examples)
+endif()
